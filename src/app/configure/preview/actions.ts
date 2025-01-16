@@ -81,7 +81,7 @@ export const createCheckoutSession = async({configId}:{configId:string}) => {
             orderId: order.id
         },
         line_items: [{
-            price:product.default_price as String,
+            price:product.default_price as string,
             quantity: 1
         }]
     })
