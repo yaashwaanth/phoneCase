@@ -1,0 +1,14 @@
+ npm i prisma @prisma/client
+ npx prisma init
+
+
+ after creating model -> creates table in db
+ npx prisma db push
+
+
+
+ to make image dragable
+ package : npm i react-rnd
+
+
+ npm i @headlessui/react

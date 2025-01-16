@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Recursive } from "next/font/google";
 import "./globals.css";
+import Navbar from "./component/Navbar";
+import Footer from "./component/Footer";
+import { Toaster } from "@/components/ui/toaster";
+import Providers from "./component/Providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -11,6 +15,10 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+const recursive = Recursive({
+  subsets: ['latin']
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,9 +33,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={recursive.className}
       >
-        {children}
+        <Navbar/>
+        <main className="flex flex-col min-h-[calc(100vh-3.5rem-1px)] grainy-light">
+        <div className="flex-1 flex flex-col h-full">
+         <Providers>
+         {children}
+         </Providers>
+        </div>
+        <Footer/>
+
+        </main>
+      <Toaster/>
       </body>
     </html>
   );
