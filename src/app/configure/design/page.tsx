@@ -4,13 +4,11 @@ import DesignConfigurator from "./DesignConfigurator"
 
 
 interface PageProps {
-    searchParams: {
-        [key:string]: string | string[] | undefined
-    }
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
 const Page = async({searchParams}:PageProps) => {
-    const {id} = searchParams
+    const {id} = await searchParams
 
     if(!id || typeof id !== 'string'){
         return notFound()
@@ -31,3 +29,4 @@ const Page = async({searchParams}:PageProps) => {
 }
 
 export default Page;
+

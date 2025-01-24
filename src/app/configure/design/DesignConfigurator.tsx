@@ -1,12 +1,12 @@
 'use client'
 
-
 import { AspectRatio } from '@/components/ui/aspect-ratio'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { cn, formatPrice } from '@/lib/utils'
 import NextImage from 'next/image'
 import { Rnd } from 'react-rnd'
 import { RadioGroup } from '@headlessui/react'
+import { Toaster } from "@/components/ui/toaster"
 import { useRef, useState } from 'react'
 import {
   COLORS,
@@ -25,12 +25,12 @@ import { Button } from '@/components/ui/button'
 import { ArrowRight, Check, ChevronsUpDown } from 'lucide-react'
 import { BASE_PRICE } from '@/config/products'
 import { useUploadThing } from '@/lib/uploadthing'
-import { useToast } from '@/hooks/use-toast'
-// import { useMutation } from '@tanstack/react-query'
-import { saveConfig as _saveConfig,SaveConfigArgs } from './actions'
-import { useRouter } from 'next/navigation'
-import HandleComponent from '@/app/component/HandleComponent'
+import { toast } from "@/hooks/use-toast"
 import { useMutation } from '@tanstack/react-query'
+import { saveConfig as _saveConfig, SaveConfigArgs } from './actions'
+import { useRouter } from 'next/navigation'
+
+import HandleComponent from '@/app/component/HandleComponent'
 
 interface DesignConfiguratorProps {
   configId: string
@@ -43,8 +43,9 @@ const DesignConfigurator = ({
   imageUrl,
   imageDimensions,
 }: DesignConfiguratorProps) => {
-  const { toast } = useToast()
+
   const router = useRouter()
+
 
   const { mutate: saveConfig, isPending } = useMutation({
     mutationKey: ['save-config'],
@@ -311,7 +312,7 @@ const DesignConfigurator = ({
                   ({ name, options: selectableOptions }) => (
                     <RadioGroup
                       key={name}
-                      value={options[name]}
+                      value={options[name as keyof typeof options]}
                       onChange={(val) => {
                         setOptions((prev) => ({
                           ...prev,
@@ -383,9 +384,9 @@ const DesignConfigurator = ({
                 )}
               </p>
               <Button
-                // isLoading={isPending}
+                isLoading={isPending}
                 disabled={isPending}
-                // loadingText="Saving"
+                loadingText="Saving"
                 onClick={() =>
                   saveConfig({
                     configId,
